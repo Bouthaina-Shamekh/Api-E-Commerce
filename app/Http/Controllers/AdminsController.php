@@ -16,6 +16,7 @@ class AdminsController extends Controller
         return view('dashboard.views-dash.admin.edit',compact('user'));
     }
 
+
     public function update_admin(Request $request)
     {
         $id=$request->id;

@@ -16,7 +16,8 @@ class AddressesController extends Controller
 
     public function index()
     {
-        return AddressService::index();
+        AddressService::index();
+
     }
 
     public function store(AddressRequest $addressRequest)

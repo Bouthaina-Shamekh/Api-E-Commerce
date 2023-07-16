@@ -15,13 +15,11 @@ return new class extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products', 'id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('product_id')->nullable()->constrained('products', 'id')->nullOnDelete()->cascadeOnUpdate();
+            $table->foreignId('variant_id')->nullable()->constrained('variants', 'id')->nullOnDelete()->cascadeOnUpdate();
             $table->foreignId('order_id')->constrained('orders', 'id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('product_name');
             $table->double('price');
-            $table->double('discount');
-            $table->string('color')->nullable();
-            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

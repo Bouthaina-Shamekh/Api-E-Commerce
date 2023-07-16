@@ -14,10 +14,12 @@ class AddressService
 {
     static function index()
     {
-        
+
         try {
             $addresses = Address::where('user_id', Auth::guard('sanctum')->user()->id)->get();
-            return AddressResource::collection($addresses)
+            return $addresses;
+
+            AddressResource::collection($addresses)
                 ->additional(['code' => 200, 'status' => true, 'message' =>  Messages::getMessage('operation accomplished successfully')]);
         } catch (Throwable $e) {
             return ControllersService::generateResponseThrowable(['message' => $e->getMessage()], 500);

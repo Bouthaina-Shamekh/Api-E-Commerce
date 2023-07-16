@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('copoun_id')->constrained('copouns', 'id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('copoun_id')->nullable()->constrained('copouns', 'id')->nullOnDelete()->cascadeOnUpdate();
             $table->foreignId('address_id')->constrained('addresses', 'id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->double('total');
-            $table->double('discount');
+            $table->double('discount')->default(0);
             $table->timestamps();
         });
     }

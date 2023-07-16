@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Http\Controllers\ControllersService;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -53,5 +54,9 @@ class Handler extends ExceptionHandler
                 ), 200);
             }
         });
+
+        // $this->renderable(function(RuntimeException $e) {
+        //     return ControllersService::generateResponseThrowable(['message' => $e->getMessage()], 500);
+        // });
     }
 }

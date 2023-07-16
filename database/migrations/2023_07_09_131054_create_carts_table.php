@@ -17,12 +17,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained('products', 'id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('user_id')->nullable()->constrained('users', 'id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('copoun_id')->nullable()->constrained('copouns', 'id')->nullOnDelete()->cascadeOnUpdate();
+            $table->foreignId('variant_id')->nullable()->constrained('variants', 'id')->nullOnDelete()->cascadeOnUpdate();
             $table->string('cookie_id');
-            $table->integer('quantity');
-            $table->string('color')->nullable();
-            $table->string('image')->nullable();
-            $table->double('price')->nullable();
-            $table->double('discount')->nullable();
+            $table->integer('quantity')->default(1);
+            $table->double('discount')->default(0);
             $table->timestamps();
         });
     }

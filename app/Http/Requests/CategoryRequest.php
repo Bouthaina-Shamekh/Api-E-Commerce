@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class CategoryRequest extends FormRequest
 {
@@ -32,6 +33,9 @@ class CategoryRequest extends FormRequest
         ];
     }
 
+
+
+
     public function categoryData()
     {
         $data = $this->validated();
@@ -41,7 +45,39 @@ class CategoryRequest extends FormRequest
             $imageName = $name . time() . '_' . '.' . $image->getClientOriginalExtension();
             $image->move('uploads/Categories/', $imageName);
             $data['image'] = 'uploads/Categories/' . $imageName;
+
+            File::delete(public_path('uploads/Categories/'.$imageName));
         }
         return $data;
     }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

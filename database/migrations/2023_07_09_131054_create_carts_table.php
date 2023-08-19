@@ -15,13 +15,9 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products', 'id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('device_token')->unique();
             $table->foreignId('user_id')->nullable()->constrained('users', 'id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('copoun_id')->nullable()->constrained('copouns', 'id')->nullOnDelete()->cascadeOnUpdate();
-            $table->foreignId('variant_id')->nullable()->constrained('variants', 'id')->nullOnDelete()->cascadeOnUpdate();
-            $table->string('cookie_id');
-            $table->integer('quantity')->default(1);
-            $table->double('discount')->default(0);
             $table->timestamps();
         });
     }

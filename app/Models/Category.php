@@ -14,6 +14,12 @@ class Category extends Model
 
     protected $fillable = ['title_ar' , 'title_en' , 'image' , 'status' , 'parent_id'];
 
+
+    public function product()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     protected static function booted()
     {
         static::addGlobalScope(new ActiveScope);

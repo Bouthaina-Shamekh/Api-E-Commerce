@@ -1,19 +1,20 @@
 <?php
 
-use App\Http\Controllers\API\V1\AddressesController;
-use App\Http\Controllers\API\V1\Auth\AuthBaseController;
-use App\Http\Controllers\API\V1\Auth\AuthController;
-use App\Http\Controllers\API\V1\CategoriesController;
-use App\Http\Controllers\API\V1\CatsController;
-use App\Http\Controllers\API\V1\ContactController;
-use App\Http\Controllers\API\V1\FavoritesController;
-use App\Http\Controllers\API\V1\HomeController;
-use App\Http\Controllers\API\V1\LocationsController;
-use App\Http\Controllers\API\V1\NotificationsController;
-use App\Http\Controllers\API\V1\ProductsController;
-use App\Http\Controllers\API\V1\SettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\V1\CatsController;
+use App\Http\Controllers\API\V1\HomeController;
+//use App\Http\Controllers\API\V1\OrderController;
+use App\Http\Controllers\API\V1\ContactController;
+use App\Http\Controllers\API\V1\SettingController;
+use App\Http\Controllers\API\V1\ProductsController;
+use App\Http\Controllers\API\V1\AddressesController;
+use App\Http\Controllers\API\V1\Auth\AuthController;
+use App\Http\Controllers\API\V1\FavoritesController;
+use App\Http\Controllers\API\V1\LocationsController;
+use App\Http\Controllers\API\V1\CategoriesController;
+use App\Http\Controllers\API\V1\Auth\AuthBaseController;
+use App\Http\Controllers\API\V1\NotificationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +41,7 @@ Route::middleware('setLocale')->prefix('V1')->group(function () {
     Route::get('product', [ProductsController::class , 'index']);
     Route::get('product/{id}', [ProductsController::class , 'show']);
     Route::apiResource('cart', CatsController::class);
-
+  //  Route::apiResource('order', OrderController::class);
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('user', [AuthController::class, 'show']);
         Route::put('user/update', [AuthController::class, 'update']);
@@ -52,4 +53,8 @@ Route::middleware('setLocale')->prefix('V1')->group(function () {
         Route::delete('destory', [AuthController::class , 'destory']);
         Route::get('logout', [AuthBaseController::class , 'logout']);
     });
+
+
+
+
 });

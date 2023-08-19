@@ -56,14 +56,14 @@
                             <span class="side-menu__label">{{ __('Roles') }}</span></a>
                     </li>
                 @endcan
-                @can('copoun-view')
+                {{-- @can('copoun-view')
                     <li class="slide">
                         <a class="side-menu__item" href="{{ route('copoun.index') }}">
                             <img class="side-menu__icon mCS_img_loaded" src="https://img.icons8.com/?size=512&id=48142&format=png"
                                 style=" width: 30px; height: 30px;">
                             <span class="side-menu__label">{{ __('Copouns') }}</span></a>
                     </li>
-                @endcan
+                @endcan --}}
                 @can('ad-view')
                     <li class="slide">
                         <a class="side-menu__item" href="{{ route('ad.index') }}">
@@ -73,22 +73,151 @@
                             <span class="side-menu__label">{{ __('Ads') }}</span></a>
                     </li>
                 @endcan
-                @can('category-view')
+                {{-- @can('category-view')
                     <li class="slide">
                         <a class="side-menu__item" href="{{ route('category.index') }}">
                             <img class="side-menu__icon mCS_img_loaded"
                                 src="https://img.icons8.com/nolan/344/categorize.png" style=" width: 30px; height: 30px;">
                             <span class="side-menu__label">{{ __('Categories') }}</span></a>
                     </li>
+                @endcan --}}
+
+
+
+                {{-- @can('attribute-view')
+                    <li class="slide">
+                        <a class="side-menu__item" href="{{route('attribute.index')}}">
+                            <img class="side-menu__icon mCS_img_loaded"
+                                src="https://img.icons8.com/nolan/344/categorize.png" style=" width: 30px; height: 30px;">
+                            <span class="side-menu__label">{{ __('Attribute') }}</span></a>
+                    </li>
                 @endcan
-                @can('contact-view')
+
+                @can('product-view')
+                    <li class="slide">
+                        <a class="side-menu__item" href="{{ route('product.index') }}">
+                            <img class="side-menu__icon mCS_img_loaded"
+                                src="https://img.icons8.com/nolan/344/categorize.png" style=" width: 30px; height: 30px;">
+                            <span class="side-menu__label">{{ __('Product') }}</span></a>
+                    </li>
+                @endcan
+
+                @can('variant-view')
+                    <li class="slide">
+                        <a class="side-menu__item" href="{{route('variant.index')}}">
+                            <img class="side-menu__icon mCS_img_loaded"
+                                src="https://img.icons8.com/nolan/344/categorize.png" style=" width: 30px; height: 30px;">
+                            <span class="side-menu__label">{{ __('Variant') }}</span></a>
+                    </li>
+                @endcan --}}
+
+                {{-- @can('product-view')
+                <div class="mb-3 mb-xl-0">
+                    <div class="btn-group dropdown">
+                        <button type="button" class="btn btn-primary">{{ __('Product') }}</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuDate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuDate" data-x-placement="bottom-end">
+                            <a class="dropdown-item" href="{{route('attribute.index')}}">Attribute</a>
+                            <a class="dropdown-item" href="{{route('product.index')}}">Product</a>
+                            <a class="dropdown-item" href="{{route('variant.index')}}">Variant</a>
+
+                        </div>
+                    </div>
+                </div>
+                @endcan --}}
+
+                 @can('product-view')
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
+                        <img class="side-menu__icon mCS_img_loaded" style=" width: 30px; height: 30px;"
+                        src="https://img.icons8.com/nolan/344/product.png"
+                        style=" width: 30px; height: 30px;">
+                        <span class="side-menu__label">{{ __('Product') }}</span><i
+                            class="angle fe fe-chevron-down"></i></a>
+                    <ul class="slide-menu" style="display: none;">
+                        <li class="panel sidetab-menu">
+                            <div class="panel-body tabs-menu-body p-0 border-0">
+                                <div class="tab-content">
+                                    <div class="tab-pane tab-content-show active" id="side26">
+                                        <ul class="sidemenu-list">
+                                            <li class="side-menu__label1"><a
+                                                    href="javascript:void(0);">{{ __('Products') }}</a></li>
+                                                    @can('category-view')
+                                                    <li > <a class="slide-item" href="{{ route('category.index') }}">
+                                                    {{ __('Categories') }}</a> </li>
+                                                    @endcan
+
+                                                    @can('copoun-view')
+                                                    <li>
+                                                        <a class="slide-item" href="{{ route('copoun.index') }}">
+                                                        {{ __('Copouns') }}</a>
+                                                    </li>
+                                                @endcan
+
+
+                                            <li><a class="slide-item" href="{{route('attribute.index')}}">{{ __('Attribute') }}</a></li>
+                                             <li><a class="slide-item" href="{{ route('product.index') }}">{{ __('Product') }}</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
+
+
+            @can('order-view')
+                    <li class="slide">
+                        <a class="side-menu__item" href="{{ route('order.index') }}">
+                            <img class="side-menu__icon mCS_img_loaded"
+                                src="https://img.icons8.com/?size=512&id=43993&format=png"
+                                style=" width: 30px; height: 30px;">
+                            <span class="side-menu__label">{{ __('Orders') }}</span></a>
+                    </li>
+                @endcan
+
+                {{-- @can('contact-view')
                 <li class="slide">
                     <a class="side-menu__item" href="{{ route('contact.index') }}">
                         <img class="side-menu__icon mCS_img_loaded"
                             src="https://img.icons8.com/?size=512&id=43993&format=png" style=" width: 30px; height: 30px;">
                         <span class="side-menu__label">{{ __('Contacts Us') }}</span></a>
                 </li>
-            @endcan
+            @endcan --}}
+
+
+                    <li class="slide">
+                        <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
+                            <img class="side-menu__icon mCS_img_loaded" style=" width: 30px; height: 30px;"
+                                src="https://img.icons8.com/nolan/64/categorize--v1.png">
+                            <span class="side-menu__label">{{ __('Cities') }}</span><i
+                                class="angle fe fe-chevron-down"></i></a>
+                        <ul class="slide-menu" style="display: none;">
+                            <li class="panel sidetab-menu">
+                                <div class="panel-body tabs-menu-body p-0 border-0">
+                                    <div class="tab-content">
+                                        <div class="tab-pane tab-content-show active" id="side26">
+                                            <ul class="sidemenu-list">
+                                                <li class="side-menu__label1"><a
+                                                        href="javascript:void(0);">{{ __('Cities') }}</a></li>
+                                                <li><a class="slide-item"
+                                                        href="{{ route('city.create') }}">{{ __('Add City') }}</a>
+                                                </li>
+                                                <li><a class="slide-item"
+                                                        href="{{ route('city.index') }}">{{ __('AlL Cities') }}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+
                 @can('setting-view')
                     <li class="slide">
                         <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
@@ -108,7 +237,7 @@
                                                         href="{{ route('setting.index') }}">{{ __('General Settings') }}</a>
                                                 </li>
                                                 <li><a class="slide-item"
-                                                        href="{{ route('setting.social') }}">{{ __('Social Media Settings') }}</a>
+                                                        href="{{ route('social.index') }}">{{ __('Social Media Settings') }}</a>
                                                 </li>
                                             </ul>
                                         </div>

@@ -25,4 +25,9 @@ class Copoun extends Model
             $this->update(['status' => 'ACTIVE']);
         }
     }
+
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

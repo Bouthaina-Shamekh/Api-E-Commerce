@@ -70,6 +70,7 @@ return [
     */
 
     'timezone' => 'UTC',
+    'currency' => 'ILS',
 
     /*
     |--------------------------------------------------------------------------
@@ -194,7 +195,8 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // ...
+
+        'Currency' => App\Helpers\Currency::class,
     ])->toArray(),
 
 ];

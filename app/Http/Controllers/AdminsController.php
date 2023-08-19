@@ -54,4 +54,4 @@ class AdminsController extends Controller
         $data=$user->save();
         return redirect()->route('home');
     }
-}
+} 

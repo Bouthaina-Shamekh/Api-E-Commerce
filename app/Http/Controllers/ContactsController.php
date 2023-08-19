@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ContactRequest;
+use App\Mail\TestMail;
 use App\Models\Contact;
-use App\Models\Scopes\ActiveScope;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\DataTables;
+use App\Models\Scopes\ActiveScope;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\ContactRequest;
 
 class ContactsController extends Controller
 {
@@ -45,6 +47,16 @@ class ContactsController extends Controller
             'message' => __('Not Found Data'),
             'status' => false,
         ]);
+    }
+
+
+     public function contact() {
+
+        Mail::to('admin@gmail.com')->send(new TestMail());
+        return 'Done';
+
+
+
     }
 
 }

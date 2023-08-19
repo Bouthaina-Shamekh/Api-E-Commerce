@@ -10,4 +10,9 @@ class Address extends Model
     use HasFactory;
 
     protected $fillable = ['title' , 'street' , 'region' , 'city' , 'zip_code' , 'note' , 'user_id'];
+
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

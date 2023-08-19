@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Variant;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Http\FormRequest;
 
 class CartRequest extends FormRequest
 {
@@ -39,6 +40,7 @@ class CartRequest extends FormRequest
     {
         $data = $this->validated();
         $data['user_id'] = Auth::guard('sanctum')->user()->id ?? NULL;
+        $data['variant_id'] = Variant::where('product_id', $data['product_id'])->first()->id ?? NULL;
         return $data;
     }
 }

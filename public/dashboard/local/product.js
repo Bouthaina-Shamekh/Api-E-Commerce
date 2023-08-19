@@ -12,13 +12,13 @@ var table = $('#get_product').DataTable({
     processing: true,
     ajax: TableUrl,
     columns: [
-        { data: "DT_RowIndex", name: "DT_RowIndex" },
-        { data: "file", name: "file" },
-        { data: "title_"+currentLang , name: "title_"+currentLang },
-        { data: "category.title_"+currentLang , name: "category.title_"+currentLang },
-        { data: "user.name", name: "user.name" },
-        { data: "price", name: "price" },
-        { data: "views", name: "views" },
+
+        {
+            data: currentLang === 'ar' ? "title_ar" : "title_en",
+            name: currentLang === 'ar' ? "title_ar" : "title_en"
+        },
+        { data: "master_image", name: "master_image"},
+        { data: "Currency", name: "Currency" },
         { data: "status", name: "status" },
         { data: "action", name: "action" },
     ]
@@ -132,4 +132,78 @@ $(document).on('click', '#showModalProduct', function (e) {
         }
     });
     $('#showModalProduct1').modal('show');
+});
+
+
+
+
+
+
+
+
+
+
+
+let EditUrl = new URL('admin/ProductAtt', host.origin);
+// view modification data
+$(document).on('click', '#showModalAddVariant', function (e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+    $('#modalVariantAdd').modal('show');
+    $.ajax({
+        type: 'GET',
+        url: EditUrl + '/' + id,
+        data: "",
+        success: function (response) {
+            if (response.status == 404) {
+                $('#error_message').html("");
+                $('#error_message').addClass("alert alert-danger");
+                $('#error_message').text(response.message);
+            } else {
+                $('#id').val(id);
+                $('#title_en').val(response.data.title_en);
+                $('#title_ar').val(response.data.title_ar);
+                $("#status option[value='" + response.data.status + "']").prop("selected", true);
+            }
+        }
+    });
+});
+
+
+
+
+
+
+let UpdateUrl = new URL('admin/product/addAttValue', host.origin);
+$(document).on('click', '#submitButton', function (e) {
+    e.preventDefault();
+    let formdata = new FormData($('#formAddAttrValue')[0]);
+    var id = $('#id').val();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'POST',
+        url: UpdateUrl + '/' + id,
+        data: formdata,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            if (response.status == false) {
+                // errors
+                $('#list_error_message2').html("");
+                $('#list_error_message2').addClass("alert alert-danger");
+                $('#list_error_message2').text(response.message);
+            } else {
+                $('#error_message').html("");
+                $('#error_message').addClass("alert alert-success");
+                $('#error_message').text(response.message);
+                $('#modalCategoryUpdate').modal('hide');
+                $('#formCategoryUpdate')[0].reset();
+                table.ajax.reload(null, false);
+            }
+        }
+    });
 });

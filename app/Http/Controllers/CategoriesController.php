@@ -80,6 +80,8 @@ class CategoriesController extends Controller
                 'status' => 200,
             ]);
         }
+
+
         return ControllersService::responseErorr([
             'message' => __('Not Found Data'),
             'status' => false,

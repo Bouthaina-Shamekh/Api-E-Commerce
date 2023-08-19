@@ -25,7 +25,17 @@ class CartService extends Controller
     {
         DB::beginTransaction();
         try {
-            Cart::create($data);
+
+        Cart::create($data);
+        //   Cart::create([
+        //     'product_id'=>$data['product_id'],
+        //     'user_id'=>$data['user_id'],
+        //     //'copoun_id'=>$data['copoun_id'],
+        //     'variant_id'=>$data['variant_id'],
+        //     'cookie_id'=>$data['cookie_id'],
+        //     'discount'=>$data['discount'],
+        //     'quantity'=>$data['quantity']
+        //   ]);
             DB::commit();
             return ControllersService::generateProcessResponse(true,  'CREATE_SUCCESS', 200);
         } catch (Throwable $e) {

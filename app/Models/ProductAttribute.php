@@ -9,6 +9,8 @@ class ProductAttribute extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['product_id' , 'option_id' ,'attribute_id'];
+
     public function attribute()
     {
         return $this->belongsTo(Attribute::class);

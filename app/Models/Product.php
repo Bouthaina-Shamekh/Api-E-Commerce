@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Variant;
 use App\Models\Scopes\ActiveScope;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -23,6 +24,12 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+
+    public function variant()
+    {
+        return $this->hasMany(Variant::class);
     }
 
     public function reviews(){
@@ -52,6 +59,12 @@ class Product extends Model
     {
         return $this->belongsToMany(Attribute::class , 'product_attributes');
     }
+
+    public function order_item()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
 
     public function scopeFilter(Builder $builder, $filters)
     {

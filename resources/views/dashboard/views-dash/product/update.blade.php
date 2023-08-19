@@ -12,12 +12,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-color-markers/dist/css/leaflet-color-markers.css" />
     <script src="https://unpkg.com/leaflet-color-markers/dist/leaflet-color-markers.js"></script>
 
-    <style>
-        #map {
-            height: 600px;
-            width: 82.7%;
-        }
-    </style>
+
 @stop
 
 @section('content')
@@ -31,7 +26,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form class="needs-validation" action="{{ route('product.update' , $product->id) }}" method="post"
+                    <form class="needs-validation" action="{{ route('product.update' , $product->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -81,18 +76,8 @@
 
                         <div class="form-group col-md-6">
                             <label for="exampleInputEmail1">{{ __('Image') }} :</label>
-                            <input type="file" class="form-control" name="file">
+                            <input type="file" class="form-control" name="master_image">
                             @error('file')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputEmail1">{{ __('Images') }} :</label>
-                            <input type="file" class="form-control" name="files[]" multiple>
-                            @error('files')
                                 <span class="text-danger">
                                     {{ $message }}
                                 </span>
@@ -102,7 +87,6 @@
                         <div class="form-group col-md-6">
                             <label for="exampleInputEmail1">{{ __('Category Name') }} :</label>
                             <select name="category_id" class="form-control">
-                                <option value=""></option>
                                 @foreach ($categories as $value)
                                     <option value="{{ $value->id }}" @if ($value->id == old('category_id' , $product->category_id)) selected @endif>
                                         {{ app()->getLocale() == 'ar' ? $value->title_ar : $value->title_en }}</option>
@@ -116,55 +100,19 @@
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="exampleInputEmail1">{{ __('Sub Categories') }} :</label>
-                            <select name="sub_category_id" class="form-control">
-                                <option value=""></option>
-                                @foreach ($subCategories as $value)
-                                    <option value="{{ $value->id }}" @if ($value->id == old('sub_category_id' , $product->sub_category_id)) selected @endif>
-                                        {{ app()->getLocale() == 'ar' ? $value->title_ar : $value->title_en }}</option>
-                                @endforeach
-                            </select>
-                            @error('sub_category_id')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputEmail1">{{ __('Display Area') }} :</label>
-                            <select name="show" class="form-control">
-                                <option value=""></option>
-                                <option value="BEST-DEALS" @if ('BEST-DEALS' == old('show' , $product->show)) selected @endif>
-                                    {{ __('BEST DEALS') }}</option>
-                                <option value="NEW-ARRIVALS" @if ('NEW-ARRIVALS' == old('show' , $product->show)) selected @endif>
-                                    {{ __('NEW ARRIVALS') }}</option>
-                                <option value="MOST-WANTED" @if ('MOST-WANTED' == old('show' , $product->show)) selected @endif>
-                                    {{ __('MOST WANTED') }}</option>
-                                <option value="DEALS-OF-THE-WEEK" @if ('DEALS-OF-THE-WEEK' == old('show' , $product->show)) selected @endif>
-                                    {{ __('DEALS OF THE WEEK') }}</option>
-                            </select>
-                            @error('show')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group col-md-6">
                             <label for="exampleInputEmail1">{{ __('Type') }} :</label>
                             <select name="type" class="form-control">
                                 <option value=""></option>
+                                <option value="ALL" @if ('ALL' == old('type' , $product->type)) selected @endif>
+                                    {{ __('ALL') }}</option>
                                 <option value="NEW" @if ('NEW' == old('type' , $product->type)) selected @endif>
                                     {{ __('NEW') }}</option>
-                                <option value="LIKENEW" @if ('LIKENEW' == old('type' , $product->type)) selected @endif>
-                                    {{ __('LIKENEW') }}</option>
-                                <option value="GOOD" @if ('GOOD' == old('type' , $product->type)) selected @endif>
-                                    {{ __('GOOD') }}</option>
-                                <option value="NOTSODUSTY" @if ('NOTSODUSTY' == old('type' , $product->type)) selected @endif>
-                                    {{ __('NOTSODUSTY') }}</option>
-                                <option value="OLD" @if ('OLD' == old('type' , $product->type)) selected @endif>
-                                    {{ __('OLD') }}</option>
+                                <option value="MOSTBOUGHT" @if ('MOSTBOUGHT' == old('type' , $product->type)) selected @endif>
+                                    {{ __('MOSTBOUGHT') }}</option>
+                                <option value="MOSTWATCHED" @if ('MOSTWATCHED' == old('type' , $product->type)) selected @endif>
+                                    {{ __('MOSTWATCHED') }}</option>
+                                <option value="MOSTFAVOURITE" @if ('MOSTFAVOURITE' == old('type' , $product->type)) selected @endif>
+                                    {{ __('MOSTFAVOURITE') }}</option>
                             </select>
                             @error('type')
                                 <span class="text-danger">
@@ -173,22 +121,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputEmail1">{{ __('User') }} :</label>
-                            <select name="user_id" class="form-control">
-                                <option value=""></option>
-                                @foreach ($users as $value)
-                                    <option value="{{ $value->id }}"
-                                        @if ($value->id == old('user_id' , $product->user_id)) selected @endif>
-                                        {{ $value->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('user_id')
-                                <span class="text-danger">
-                                    {{ $message }}
-                                </span>
-                            @enderror
-                        </div>
+
 
                         <div class="form-group col-md-6">
                             <label for="exampleInputEmail1">{{ __('Status') }} :</label>
@@ -204,6 +137,47 @@
                                 </span>
                             @enderror
                         </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1">{{ __('General in Arabic') }} :</label>
+                            <textarea name="general_info_ar" class="form-control" rows="10">{{ old('general_info_ar' , $product->general_info_ar) }}</textarea>
+                            @error('general_info_ar')
+                                <span class="text-danger">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1">{{ __('General in English') }} :</label>
+                            <textarea name="general_info_en" class="form-control" rows="10">{{ old('general_info_en' , $product->description_ar) }}</textarea>
+                            @error('general_info_en')
+                                <span class="text-danger">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1">{{ __('Specefications in Arabic') }} :</label>
+                            <textarea name="specefications_ar" class="form-control" rows="10">{{ old('specefications_ar' , $product->specefications_ar) }}</textarea>
+                            @error('specefications_ar')
+                                <span class="text-danger">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1">{{ __('Specefications in English') }} :</label>
+                            <textarea name="specefications_en" class="form-control" rows="10">{{ old('specefications_en' , $product->specefications_en) }}</textarea>
+                            @error('specefications_en')
+                                <span class="text-danger">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+
 
                         <div class="form-group col-md-6">
                             <label for="exampleInputEmail1">{{ __('Description in Arabic') }} :</label>
@@ -238,24 +212,3 @@
         </div>
     </div>
 @endsection
-@section('script')
-    <script>
-        var map = L.map('map').setView([23.8859, 45.0792], 5);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
-
-        let marker = L.marker([{{ $product->lat }}, {{ $product->lng }}]).addTo(map)
-        map.on('click', (event) => {
-            if (marker !== null) {
-                map.removeLayer(marker);
-            }
-            marker = L.marker([event.latlng.lat, event.latlng.lng]).addTo(map);
-            lat = event.latlng.lat;
-            lng = event.latlng.lng;
-            document.getElementById("lat").value = lat;
-            document.getElementById("lng").value = lng;
-        });
-    </script>
-@stop

@@ -19,7 +19,10 @@ return new class extends Migration
             $table->foreignId('copoun_id')->nullable()->constrained('copouns', 'id')->nullOnDelete()->cascadeOnUpdate();
             $table->foreignId('address_id')->constrained('addresses', 'id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->double('total');
+            $table->double('price');
             $table->double('discount')->default(0);
+            $table->enum('status' ,['pending','processing','shipped','cancelled','completed'])->default('pending');
+            $table->enum('payment_status',['pending','failed','paid','refunded'])->default('pending');
             $table->timestamps();
         });
     }

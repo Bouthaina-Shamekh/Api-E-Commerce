@@ -10,18 +10,135 @@ if (currentLang !== 'ar' && currentLang !== 'en') {
 
 var table = $('#get_order').DataTable({
     processing: true,
+    serverSide: true,
     ajax: TableUrl,
+    ajax: {
+        url: TableUrl,
+        data: function (d) {
+            d.userId = $('select[name=user_h]').val();
+            d.statusId = $('select[name=status_h]').val();
+            d.fromId = $('#from_1_h').val();
+            d.toId = $('#to_1_h').val();
+            d.fromId2 = $('#from_2_h').val();
+            d.toId2 = $('#to_2_h').val();
+
+        }
+    },
+
+
     columns: [
-        { data: "DT_RowIndex", name: "DT_RowIndex" },
-        { data: "total", name: "total" },
-        { data: "buyer.name", name: "buyer.name" },
-        { data: "product.title_"+currentLang , name: "product.title_"+currentLang },
-        { data: "seller.name", name: "seller.name" },
-        { data: "status", name: "status" },
-        { data: "payment_status", name: "payment_status" },
+
+        { data: "user_id", name: "user_id" },
+        { data: "copoun_id", name: "copoun_id" },
+        { data: "address_id", name: "address_id" },
+        { data: "total", name: "total"},
+        { data: "discount", name: "discount" },
+        { data: "price", name: "price" },
+
+        {"mRender": function ( data, type, row ) {
+            var sel = '<select style="width:120px" onchange="myFunction(this)" id="'+row.id+'" name="print_e" class="form-control">';
+            var op1 = '<option value="pending">pending</option>';
+            if(row.status=='pending'){
+                op1 = '<option selected value="pending">pending</option>';
+            }
+            var op2 = '<option value="processing"> processing</option>';
+            if(row.status=='processing'){
+                op2 = '<option selected value="processing">processing</option>';
+            }
+            var op3 = '<option value="shipped">shipped</option>';
+            if(row.status=='shipped'){
+                op3 = '<option selected value="shipped">shipped</option>';
+            }
+            var op4 = '<option value="cancelled">cancelled</option>';
+            if(row.status=='cancelled'){
+                op4 = '<option selected value="cancelled">cancelled</option>';
+            }
+            var op5 = '<option value="completed">completed</option>';
+            if(row.status=='completed'){
+                op5 = '<option selected value="completed">completed</option>';
+            }
+            var se = '</select>';
+
+            var all = sel + op1 + op2 + op3 +op4 +op5 + se;
+
+            return all;
+        }
+        ,orderable: false},
+        { data: "payment_status", name: "payment_status"},
         { data: "action", name: "action" },
+
     ]
 });
+
+   //filtering
+   $('#user_h').change(function() {
+    table.draw();
+});
+
+$('#status_h').change(function() {
+    table.draw();
+});
+
+$('#search_1_h').click(function(e) {
+    e.preventDefault();
+    table.draw();
+});
+
+$('#search_2_h').click(function(e) {
+    e.preventDefault();
+    table.draw();
+});
+
+
+
+
+function myFunction(selectID) {
+    var status=selectID.value;
+    var id=selectID.id;
+    $.get("/admin/order/Status/"+id+"/"+status);
+       not7();
+}
+
+//  view modal Category
+$(document).on('click', '#ShowModalCategory', function (e) {
+    e.preventDefault();
+    $('#modalCategoryAdd').modal('show');
+});
+
+let AddUrl = new URL('admin/category', host.origin);
+// category admin
+$(document).on('click', '#addCategory', function (e) {
+    e.preventDefault();
+    let formdata = new FormData($('#formCategoryAdd')[0]);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'POST',
+        url: AddUrl,
+        data: formdata,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            if (response.status == false) {
+                // errors
+                $('#list_error_message').html("");
+                $('#list_error_message').addClass("alert alert-danger");
+                $('#list_error_message').text(response.message);
+            } else {
+                $('#error_message').html("");
+                $('#error_message').addClass("alert alert-success");
+                $('#error_message').text(response.message);
+                $('#modalCategoryAdd').modal('hide');
+                $('#formCategoryAdd')[0].reset();
+                table.ajax.reload(null, false);
+            }
+        }
+    });
+});
+
 
 let DeleteUrl = new URL('admin/order', host.origin);
 $(document).on('click', '#showModalDeleteOrder', function (e) {
@@ -64,7 +181,7 @@ function gg(id) {
     });
 }
 
-let statusUrl = new URL('admin/status/order', host.origin);
+let statusUrl = new URL('admin/status/category', host.origin);
 $(document).on('click', '#status', function (e) {
     e.preventDefault();
     var id = $(this).data('id');
@@ -91,43 +208,4 @@ $(document).on('click', '#status', function (e) {
             }
         }
     });
-});
-
-let showUrl = new URL('admin/order', host.origin);
-$(document).on('click', '#showModalOrder', function (e) {
-    e.preventDefault();
-    var id = $(this).data('id');
-    $.ajax({
-        type: 'GET',
-        url: showUrl + '/' + id,
-        data: "",
-        success: function (response) {
-            if (response.status == 404) {
-                $('#error_message').html("");
-                $('#error_message').addClass("alert alert-danger");
-                $('#error_message').text(response.message);
-            } else {
-                L.marker([response.data.product.lat, response.data.product.lng]).addTo(map);
-                $('#image').html('<img src='+ response.data.product.file +' style="width: 30px; height: 30px;">');
-                $('#name').text(response.data.product.title_ar);
-                $('#product_owner').text(response.data.seller.name);
-                $('#price').text(response.data.product.price);
-                $('#discount').text(response.data.product.discount);
-                $('#views').text(response.data.product.views);
-                $('#status').text(response.data.product.status);
-                $('#show').text(response.data.product.show);
-                $('#category').text(response.data.product.category.title_ar);
-                $('#sub_category').text(response.data.product.sub_category.title_ar);
-
-                $('#name_buyer').text(response.data.buyer.name);
-                $('#phone_buyer').text(response.data.buyer.phone);
-                $('#Status_buyer').text(response.data.buyer.status);
-
-                $('#name_seller').text(response.data.seller.name);
-                $('#phone_seller').text(response.data.seller.phone);
-                $('#Status_seller').text(response.data.seller.status);
-            }
-        }
-    });
-    $('#showModalOrder1').modal('show');
 });

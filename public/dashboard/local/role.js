@@ -55,6 +55,12 @@ var denouncements = ['denouncement-view', 'denouncement-create', 'denouncement-u
 var setting = ['setting-view', 'setting-create', 'setting-update', 'setting-delete'
 ];
 
+var city = ['city-view','city-create'
+];
+
+var bro = ['bro-view', 'bro-create', 'bro-update', 'bro-delete'
+];
+
 var roles = [
     'role-all', 'role-view', 'role-create', 'role-update', 'role-delete',
     'order-all', 'order-view', 'order-create', 'order-update', 'order-delete',
@@ -66,6 +72,8 @@ var roles = [
     'product-all', 'product-view', 'product-create', 'product-update', 'product-delete',
     'denouncement-all', 'denouncement-view', 'denouncement-create', 'denouncement-update', 'denouncement-delete',
     'setting-all', 'setting-view', 'setting-create', 'setting-update', 'setting-delete',
+    'city-all','city-view','city-create'
+
 ];
 
 function all(all, arr = []) {
@@ -102,6 +110,7 @@ all('subCategory-all', subCategories);
 all('product-all', products);
 all('denouncement-all', denouncements);
 all('setting-all', setting);
+
 
 $('#allh').click(function(e) {
     e.preventDefault();
